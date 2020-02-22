@@ -39,6 +39,7 @@ plot(ndvi)
 # movement data pre-processing
 # remove redundant data points
 
+plotMove(shortMove, ndvi)
 plot(shortMove)
 
 # moveReduce() due to the coarser remote sensing data resolution
@@ -130,6 +131,21 @@ ptest
 # conderidering that the White Stork is reportedly attracted by agriculture
 # the output of plausibiliyTest() suggests we build a reasonable predictive model
 
+###########################################################################################
+###########################################################################################
+# example for using plotMove()
 
+# needed data:
+# shortMove: movement data
+# ndvi: raster data
+r <- raster(system.file("extdata", "2013-07-16_ndvi.tif", package = "rsMove"))
+# obs.time: observation time
+# reduced.samples: redueced amount of samples
+# query data
+ov <- extract(r, reduced.samples$points)
+x <- reduced.samples$points@data$x
+y <- reduced.samples$points@data$y
+et <- reduced.samples$points@data$elapsed.time
 
-
+output <- plotMove(x, y, size.var = et, fill.var = ov, var.type = "cont")
+plot(output)
